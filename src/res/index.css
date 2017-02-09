@@ -1,0 +1,23 @@
+#guid-main {
+    position: relative;
+}
+
+#guid-main .datepicker {
+    position: absolute;
+    display: none;
+    top: 30px;
+}
+
+#guid-main #table_detail {
+    margin-top: 40px;
+}
+
+#guid-main #btn_manage_column {
+    position: absolute;
+    right: 0px;
+    top: 48px;
+}
+
+#guid-main #table_detail tr {
+    cursor: pointer !important;
+}

@@ -1,0 +1,189 @@
+<div id="guid-main">
+    <div class="row">
+        <div class="navbar">
+            <div class="inline">
+                $i18n.guid
+
+                <input id="guid" type="text" class="input small" value="$guid" />
+            </div>
+
+
+            <div class="inline">
+                $i18n.stime
+
+                <a id="btn_s_date" class="btn small"><span></span> <i class="icon-calendar"></i></a>
+
+                <div id="s_hours" class="combo">
+                    <a class="btn small">Select...</a>
+                    <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                    <ul>
+                        #foreach($i in [0..23])
+                            <li value="$i">$i</li>
+                        #end
+                    </ul>
+                </div>
+
+                <div id="s_minutes" class="combo">
+                    <a class="btn small">Select...</a>
+                    <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                    <ul>
+                        #foreach($i in [0..59])
+                            <li value="$i">$i</li>
+                        #end
+                    </ul>
+                </div>
+            </div>
+
+            <div class="inline">
+                $i18n.etime
+
+                <a id="btn_e_date" class="btn small"><span></span> <i class="icon-calendar"></i></a>
+
+                <div id="e_hours" class="combo">
+                    <a class="btn small">Select...</a>
+                    <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                    <ul>
+                        #foreach($i in [0..23])
+                            <li value="$i">$i</li>
+                        #end
+                    </ul>
+                </div>
+
+                <div id="e_minutes" class="combo">
+                    <a class="btn small">Select...</a>
+                    <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                    <ul>
+                        #foreach($i in [0..59])
+                            <li value="$i">$i</li>
+                        #end
+                    </ul>
+                </div>
+            </div>
+
+            <div class="inline">
+                <a id="btn_search" class="btn small"><i class="icon-search"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <a class="btn small" id="btn_manage_column">
+            <i class="icon-column"></i> $i18n.manageColumn
+        </a>
+
+        <div id="table_detail" class="xtable scroll">
+            <table class="table classic">
+                <thead>
+                    <tr>
+                        <th>$i18n.domainName</th>
+                        <th>$i18n.domainId</th>
+                        <th>$i18n.instanceName</th>
+                        <th>$i18n.instanceId</th>
+                        <th>$i18n.business</th>
+                        <th>$i18n.txid</th>
+                        <th>$i18n.guid</th>
+                        <th>$i18n.clientIp</th>
+                        <th>$i18n.clientId</th>
+                        <th>$i18n.userId</th>
+                        <th>$i18n.networkTime</th>
+                        <th>$i18n.frontendTime</th>
+                        <th>$i18n.startTime</th>
+                        <th>$i18n.endTime</th>
+                        <th>$i18n.responseTime</th>
+                        <th>$i18n.cpuTime</th>
+                        <th>$i18n.sqlTime</th>
+                        <th>$i18n.fetchTime</th>
+                        <th>$i18n.externalcallTime</th>
+                        <th>$i18n.errorType</th>
+                        <th width="20%">$i18n.applicationName</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script id="tpl_row" type="text/template">
+            <tr>
+                <td><!= domainName !></td>
+                <td><!= domainId !></td>
+                <td><!= instanceName !></td>
+                <td><!= instanceId !></td>
+                <td><!= business.join(",") !></td>
+                <td><!= txid !></td>
+                <td><!= guid !></td>
+                <td><!= clientIp !></td>
+                <td><!= clientId !></td>
+                <td><!= userId !></td>
+                <td align="right"><!= networkTime.toLocaleForJennifer() !></td>
+                <td align="right"><!= frontendTime.toLocaleForJennifer() !></td>
+                <td><!= getServerMoment(startTime).format("HH:mm:ss") !></td>
+                <td><!= getServerMoment(endTime).format("HH:mm:ss") !></td>
+                <td align="right"><!= responseTime.toLocaleForJennifer() !></td>
+                <td align="right"><!= cpuTime.toLocaleForJennifer() !></td>
+                <td align="right"><!= sqlTime.toLocaleForJennifer() !></td>
+                <td align="right"><!= fetchTime.toLocaleForJennifer() !></td>
+                <td align="right"><!= externalcallTime.toLocaleForJennifer() !></td>
+                <td><!= errorType !></td>
+                <td><!= applicationName !></td>
+            </tr>
+        </script>
+
+        <script id="tpl_none" type="text/template">
+            <tr>
+                <td colspan="21" class="none" align="center" style="font-weight: bold !important;"><strong>$i18n.nodata</strong></td>
+            </tr>
+        </script>
+
+        <script id="tpl_menu" type="text/template">
+            <div class="dropdown">
+                <div class="anchor" style="left: 135px;"></div>
+
+                <ul style="width: 150px; height: 120px; overflow-y: auto;">
+                    <! for(var i = 0; i < columns.length; i++) { !>
+                    <li <! if(i == 0 || i == 2 || i == 20) { !>style="display: none;"<! } !>>
+                    <a><input type="checkbox" />&nbsp; <!= columns[i] !></a>
+                    </li>
+                    <! } !>
+                </ul>
+            </div>
+        </script>
+
+        <script id="tpl_loading" type="text/template">
+            <div class="loading"></div>
+        </script>
+    </div>
+
+    <div id="s_datepicker" class="datepicker">
+        <div class="head">
+            <div class="prev"><i class="icon-chevron-left"></i></div>
+            <div class="title"></div>
+            <div class="next"><i class="icon-chevron-right"></i></div>
+        </div>
+        <table class="body">
+            <tr>
+                <th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="e_datepicker" class="datepicker">
+        <div class="head">
+            <div class="prev"><i class="icon-chevron-left"></i></div>
+            <div class="title"></div>
+            <div class="next"><i class="icon-chevron-right"></i></div>
+        </div>
+        <table class="body">
+            <tr>
+                <th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
+            </tr>
+        </table>
+    </div>
+
+    <script id="tpl_date" type="text/template">
+        <td><!= date !></td>
+    </script>
+</div>
+
+<input id="param_stime" type="hidden" value="$stime" />
+<input id="param_etime" type="hidden" value="$etime" />
+<input id="msg_alert1" type="hidden" value="$i18n.alert1" />
