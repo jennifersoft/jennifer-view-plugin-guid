@@ -67,9 +67,18 @@
     </div>
 
     <div class="row">
-        <a class="btn small" id="btn_manage_column">
-            <i class="icon-column"></i> $i18n.manageColumn
-        </a>
+        <div class="total-count">
+            <strong>$i18n.showTotalCount</strong> : <span>0</span>
+        </div>
+
+        <div class="group btn-group">
+            <a class="btn small" id="btn_all_transaction">
+                <i class="icon-template"></i> $i18n.viewTransactionAll
+            </a>
+            <a class="btn small" id="btn_manage_column">
+                $i18n.manageColumn
+            </a>
+        </div>
 
         <div id="table_detail" class="xtable scroll">
             <table class="table classic">

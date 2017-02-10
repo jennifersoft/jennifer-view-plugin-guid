@@ -65,20 +65,10 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
     // 검색 이벤트 설정
     $("#btn_search").on("click", function(e) {
         var guid = $("#guid").val(),
-            sdate = ui_dates[0].getDate(),
-            edate = ui_dates[1].getDate();
-
-        sdate.setHours(ui_hours[0].getValue());
-        sdate.setMinutes(ui_minutues[0].getValue());
-        sdate.setSeconds(0);
-        sdate.setMilliseconds(0);
-        edate.setHours(ui_hours[1].getValue());
-        edate.setMinutes(ui_minutues[1].getValue());
-        edate.setSeconds(1);
-        edate.setMilliseconds(1);
+            times = getSearchTimes();
 
         if(guid != "") {
-            loadGuidDataList(guid, sdate.getTime(), edate.getTime());
+            loadGuidDataList(guid, times.start, times.end);
         } else {
             alert($("#msg_alert1").val());
         }
@@ -89,6 +79,29 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
         var offset = $(e.target).offset();
 
         ui_table.toggleColumnMenu($('body').width() - 170, offset.top + 23);
+        return false;
+    });
+
+    // 전체 트랜잭션 팝업 띄우기
+    $("#btn_all_transaction").on("click", function(e) {
+        var times = getSearchTimes(),
+            datas = ui_table.listData(),
+            unitsBySid = {};
+
+        if(datas.length > 0) {
+            for (var i = 0; i < datas.length; i++) {
+                var sid = datas[i].domainId;
+
+                if (!unitsBySid[sid]) {
+                    unitsBySid[sid] = [];
+                }
+
+                unitsBySid[sid].push(datas[i].txid);
+            }
+
+            jennifer.ui.getXivewPointListForMultiDomain(unitsBySid, times.start, times.end);
+        }
+
         return false;
     });
 
@@ -136,6 +149,8 @@ function loadGuidDataList(guid, stime, etime) {
         },
         success: function(data) {
             ui_table.update(data);
+            $(".total-count").find("span").html(data.length.toLocaleForJennifer());
+
             jennifer.ui.closeLoading();
         },
         error: function(e) {
@@ -150,4 +165,23 @@ function setDateParams(index, time) {
     ui_dates[index].select(time);
     ui_hours[index].setValue(date.getHours());
     ui_minutues[index].setValue(date.getMinutes());
+}
+
+function getSearchTimes() {
+    var sdate = ui_dates[0].getDate(),
+        edate = ui_dates[1].getDate();
+
+        sdate.setHours(ui_hours[0].getValue());
+        sdate.setMinutes(ui_minutues[0].getValue());
+        sdate.setSeconds(0);
+        sdate.setMilliseconds(0);
+        edate.setHours(ui_hours[1].getValue());
+        edate.setMinutes(ui_minutues[1].getValue());
+        edate.setSeconds(1);
+        edate.setMilliseconds(1);
+
+    return {
+        start: sdate.getTime(),
+        end: edate.getTime()
+    }
 }
