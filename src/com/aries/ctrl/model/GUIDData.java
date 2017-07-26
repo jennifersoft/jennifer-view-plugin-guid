@@ -1,4 +1,4 @@
-package com.jennifersoft.ctrl.model;
+package com.aries.ctrl.model;
 
 import java.util.List;
 
