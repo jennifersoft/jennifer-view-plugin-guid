@@ -35,8 +35,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = { "/plugin" })
-public class GUIDController extends BaseController
-{
+public class GUIDController {
     @Autowired
     TextDataService textDataService;
     @Autowired
