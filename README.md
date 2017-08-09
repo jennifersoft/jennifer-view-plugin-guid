@@ -8,11 +8,6 @@ Execute the following in the Jennifer management screen.
  3. Select the 'PAGE' type.
  4. Enter the 'anything' ID.
  5. Enter the plugin path directly or upload the file.
-
-
-## Supported platforms
-
-Only Java
  
  
 ## Supported version
