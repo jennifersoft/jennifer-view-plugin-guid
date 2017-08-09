@@ -1,21 +1,25 @@
 ## Getting started
 
-You must modify the configuration file of the view server. (conf/server_view.conf)
-```
-plugin_class_path = ${PLUGIN_PROJECT_PATH}/dist/jennifer-view-plugin-guid-1.0.0.jar
-```
+Execute the following in the Jennifer management screen.
 
-After modifying the configuration file, you must restart the view server.
+ 1. Extension & Notice > Adapter and Plugin.
+ 2. Select the plugin tab.
+ 2. Click the Add button.
+ 3. Select the 'PAGE' type.
+ 4. Enter the 'anything' ID.
+ 5. Enter the plugin path directly or upload the file.
 
 
-## How to use
+## Supported platforms
 
-If you need to search directly when loading the screen, you can use the following url.
-```
-/plugin/guid?guid=5&stime=20170209000000&etime=20170209010000&time_pattern=yyyyMMddhhmmss
-```
-
-If you need to load the screen in an iframe, you can use the following url.
-```
-/plugin/guid?layout=iframe
-```
+Only Java
+ 
+ 
+## Supported version
+ 
+Different versions of the server support different plug-in versions.
+ 
+| Plugin version           | Jennifer server version |
+| ------------- |:-------------:|
+| 1.0.0       | Greater than or equal to version 5.2.3 |
+| 1.0.1       | Greater than or equal to version 5.3.0 |
