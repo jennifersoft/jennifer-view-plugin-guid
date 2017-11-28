@@ -131,6 +131,7 @@ public class GUIDController {
         point.setFrontendTime(r.frontEndElapsedTimeOrZero);
         point.setStartTime(r.agentEndTime - r.elapsedTime);
         point.setEndTime(r.agentEndTime);
+        point.setCollectionTime(r.collectTime);
 
         point.setResponseTime(r.elapsedTime);
         point.setCpuTime(r.cpuTime);

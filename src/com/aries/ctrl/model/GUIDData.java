@@ -17,6 +17,7 @@ public class GUIDData {
     private int frontendTime;
     private long startTime;
     private long endTime;
+    private long collectionTime;
     private int responseTime;
     private int cpuTime;
     private int sqlTime;
@@ -26,6 +27,14 @@ public class GUIDData {
     private String applicationName;
 
     public GUIDData() {
+    }
+
+    public long getCollectionTime() {
+        return collectionTime;
+    }
+
+    public void setCollectionTime(long collectionTime) {
+        this.collectionTime = collectionTime;
     }
 
     public short getDomainId() {

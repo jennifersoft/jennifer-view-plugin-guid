@@ -85,9 +85,7 @@
                 <thead>
                     <tr>
                         <th>$i18n.domainName</th>
-                        <th>$i18n.domainId</th>
                         <th>$i18n.instanceName</th>
-                        <th>$i18n.instanceId</th>
                         <th>$i18n.business</th>
                         <th>$i18n.txid</th>
                         <th>$i18n.guid</th>
@@ -98,11 +96,12 @@
                         <th>$i18n.frontendTime</th>
                         <th>$i18n.startTime</th>
                         <th>$i18n.endTime</th>
+                        <th>$i18n.collectionTime</th>
                         <th>$i18n.responseTime</th>
-                        <th>$i18n.cpuTime</th>
                         <th>$i18n.sqlTime</th>
-                        <th>$i18n.fetchTime</th>
                         <th>$i18n.externalcallTime</th>
+                        <th>$i18n.fetchTime</th>
+                        <th>$i18n.cpuTime</th>
                         <th>$i18n.errorType</th>
                         <th width="20%">$i18n.applicationName</th>
                     </tr>
@@ -114,24 +113,23 @@
         <script id="tpl_row" type="text/template">
             <tr>
                 <td><!= domainName !></td>
-                <td><!= domainId !></td>
                 <td><!= instanceName !></td>
-                <td><!= instanceId !></td>
                 <td><!= business.join(",") !></td>
                 <td><!= txid !></td>
                 <td><!= guid !></td>
-                <td><!= clientIp !></td>
+                <td><!= (clientIp == null || clientIp == 'null') ? '' : clientIp !></td>
                 <td><!= clientId !></td>
-                <td><!= userId !></td>
-                <td align="right"><!= networkTime.toLocaleForJennifer() !></td>
-                <td align="right"><!= frontendTime.toLocaleForJennifer() !></td>
-                <td><!= getServerMoment(startTime).format("HH:mm:ss") !></td>
-                <td><!= getServerMoment(endTime).format("HH:mm:ss") !></td>
-                <td align="right"><!= responseTime.toLocaleForJennifer() !></td>
-                <td align="right"><!= cpuTime.toLocaleForJennifer() !></td>
-                <td align="right"><!= sqlTime.toLocaleForJennifer() !></td>
-                <td align="right"><!= fetchTime.toLocaleForJennifer() !></td>
-                <td align="right"><!= externalcallTime.toLocaleForJennifer() !></td>
+                <td><!= (userId == null) ? '' : userId !></td>
+                <td align="right"><!= networkTime.toLocaleForAries() !></td>
+                <td align="right"><!= frontendTime.toLocaleForAries() !></td>
+                <td><!= getServerMoment(startTime).format("HH:mm:ss SSS") !></td>
+                <td><!= getServerMoment(endTime).format("HH:mm:ss SSS") !></td>
+                <td><!= getServerMoment(collectionTime).format("HH:mm:ss SSS") !></td>
+                <td align="right"><!= responseTime.toLocaleForAries() !></td>
+                <td align="right"><!= sqlTime.toLocaleForAries() !></td>
+                <td align="right"><!= externalcallTime.toLocaleForAries() !></td>
+                <td align="right"><!= fetchTime.toLocaleForAries() !></td>
+                <td align="right"><!= (cpuTime == -1) ? '' : cpuTime.toLocaleForAries() !></td>
                 <td><!= errorType !></td>
                 <td><!= applicationName !></td>
             </tr>
@@ -139,17 +137,17 @@
 
         <script id="tpl_none" type="text/template">
             <tr>
-                <td colspan="21" class="none" align="center" style="font-weight: bold !important;"><strong>$i18n.nodata</strong></td>
+                <td colspan="20" class="none" align="center" style="font-weight: bold !important;"><strong>$i18n.nodata</strong></td>
             </tr>
         </script>
 
         <script id="tpl_menu" type="text/template">
             <div class="dropdown">
-                <div class="anchor" style="left: 135px;"></div>
+                <div class="anchor" style="left: 125px;"></div>
 
-                <ul style="width: 150px; height: 120px; overflow-y: auto;">
+                <ul style="width: 160px; height: 120px; overflow-y: auto;">
                     <! for(var i = 0; i < columns.length; i++) { !>
-                    <li <! if(i == 0 || i == 2 || i == 20) { !>style="display: none;"<! } !>>
+                    <li <! if(i == 1 || i == 19) { !>style="display: none;"<! } !>>
                     <a><input type="checkbox" />&nbsp; <!= columns[i] !></a>
                     </li>
                     <! } !>

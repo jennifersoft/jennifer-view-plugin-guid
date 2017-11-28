@@ -3,26 +3,31 @@ var ui_dates = null, ui_hours = null, ui_minutues = null, ui_table = null;
 jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepicker, xtable) {
     var guid = $("#guid").val(),
         stime = parseInt($("#param_stime").val()),
-        etime = parseInt($("#param_etime").val());
+        etime = parseInt($("#param_etime").val()),
+        popupWidth = $("#guid-main").width();
 
     ui_table = xtable("#table_detail", {
         fields: [
-            "domainName", "domainId", "instanceName", "instanceId", "business", "txid", "guid", "clientIp", "clientId", "userId", "networkTime", "frontendTime",
-            "startTime", "endTime", "responseTime", "cpuTime", "sqlTime", "fetchTime", "externalcallTime", "errorType", "applicationName"
+            "domainName", "instanceName", "business", "txid", "guid", "clientIp", "clientId", "userId", "networkTime", "frontendTime",
+            "startTime", "endTime", "collectionTime", "responseTime", "sqlTime", "externalcallTime", "fetchTime", "cpuTime",
+            "errorType", "applicationName"
         ],
         resize: true,
-        colshow: [ 0, 2, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ],
+        colshow: [ 1, 2, 4, 6, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19 ],
         sort: true,
         sortIndex: 12,
+        width: popupWidth + (popupWidth * 0.15),
+        scrollWidth: popupWidth,
+        rowHeight: 26,
         sortLoading: true,
         scrollHeight: $("#content").height() - 200,
-        rowHeight: 26,
         buffer: "vscroll",
         event: {
             sort: setSortEff,
             select: function(row, e) {
                 this.select(row.index);
-                jennifer.ui.getXivewPointList(row.data.domainId, [ row.data.txid ], row.data.startTime, row.data.endTime, row.data.txid);
+                aries.ui.getXivewPointList(row.data.domainId, [ row.data.txid ],
+                    row.data.collectionTime - row.data.responseTime, row.data.collectionTime, row.data.txid);
             }
         },
         tpl: {
@@ -35,7 +40,7 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
 
     ui_dates = datepicker("#s_datepicker,#e_datepicker", {
         titleFormat: "yyyy. MM",
-        format: "yyyy/MM/dd",
+        format: "yyyy-MM-dd",
         event: {
             select: function(date, e) {
                 if(this.index == 0) {
@@ -99,7 +104,7 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
                 unitsBySid[sid].push(datas[i].txid);
             }
 
-            jennifer.ui.getXivewPointListForMultiDomain(unitsBySid, times.start, times.end);
+            aries.ui.getXivewPointListForMultiDomain(unitsBySid, times.start, times.end);
         }
 
         return false;
@@ -137,7 +142,7 @@ function setDatePickerEvent(elem, start, end) {
 }
 
 function loadGuidDataList(guid, stime, etime) {
-    jennifer.ui.showLoading();
+    aries.ui.showLoading();
 
     $.ajax({
         url:"/plugin/guid/list",
@@ -149,12 +154,12 @@ function loadGuidDataList(guid, stime, etime) {
         },
         success: function(data) {
             ui_table.update(data);
-            $(".total-count").find("span").html(data.length.toLocaleForJennifer());
+            $(".total-count").find("span").html(data.length.toLocaleForAries());
 
-            jennifer.ui.closeLoading();
+            aries.ui.closeLoading();
         },
         error: function(e) {
-            jennifer.ui.closeLoading();
+            aries.ui.closeLoading();
         }
     });
 }
