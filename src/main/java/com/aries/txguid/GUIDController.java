@@ -1,8 +1,8 @@
-package com.aries.ctrl;
+package com.aries.txguid;
 
-import com.aries.ctrl.model.GUIDData;
+import com.aries.extension.starter.PluginController;
+import com.aries.txguid.model.GUIDData;
 import com.aries.data.viewdata.TransactionViewData;
-import com.aries.view.LogUtil;
 import com.aries.view.api.BusinessSet;
 import com.aries.view.api.data.Business;
 import com.aries.view.core.nio.DataServerException;
@@ -28,13 +28,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-@RequestMapping(value = { "/plugin" })
-public class GUIDController {
+public class GUIDController extends PluginController {
     @Autowired
     TextDataService textDataService;
     @Autowired
@@ -70,7 +70,7 @@ public class GUIDController {
                 Date edate = sdf.parse(etime);
                 end_time = edate.getTime();
             } catch (ParseException e) {
-                LogUtil.warn(e);
+                System.out.println(e.getMessage());
             }
 
         } else {
@@ -155,7 +155,7 @@ public class GUIDController {
 
         for(int i = 0; i < bizOids.length; i++) {
             for(int j = 0; j < bizSet.size(); j++) {
-                if(bizOids[i] == bizSet.get(j).getOid()) {
+                if(bizOids[i] == bizSet.get(j).getBusinessOid()) {
                     Business biz = bizSet.get(j);
                     newBizSet.add(biz.getBusinessId());
                 }
@@ -180,7 +180,7 @@ public class GUIDController {
             b.setDescription((String) m.get("longName"));
             b.setBadResponseTime(Integer.parseInt((String) m.get("badResponseTimeLimit")));
             b.setBusinessIndex((String) m.get("treeIndex"));
-            b.setOid((Integer) m.get("oid"));
+            b.setBusinessOid((Integer) m.get("oid"));
 
             String ruleList = (String) m.get("ruleList");
             b.setRuleList(ruleList.split("\\|"));

@@ -1,4 +1,18 @@
+import $ from 'jquery';
+import jui from 'juijs';
+import ComboComp from 'juijs-ui/src/components/combo';
+import DatePickerComp from 'juijs-ui/src/components/datepicker';
+import XTableComp from 'juijs-grid/src/components/xtable';
+import extension from 'aries-extension-js';
+import './index.less';
+
 var ui_dates = null, ui_hours = null, ui_minutues = null, ui_table = null;
+
+extension.setup({
+    hostName: ""
+});
+
+jui.use(ComboComp, DatePickerComp, XTableComp);
 
 jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepicker, xtable) {
     var guid = $("#guid").val(),
@@ -23,11 +37,15 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
         scrollHeight: $("#content").height() - 200,
         buffer: "vscroll",
         event: {
-            sort: setSortEff,
             select: function(row, e) {
                 this.select(row.index);
-                aries.ui.getXivewPointList(row.data.domainId, [ row.data.txid ],
-                    row.data.collectionTime - row.data.responseTime, row.data.collectionTime, row.data.txid);
+
+                extension.popup("xview", {
+                    domainId: row.data.domainId,
+                    txIds: [ row.data.txid ],
+                    startTime: row.data.collectionTime - row.data.responseTime,
+                    endTime: row.data.collectionTime
+                });
             }
         },
         tpl: {
@@ -104,7 +122,11 @@ jui.ready([ "ui.combo", "ui.datepicker", "grid.xtable" ], function(combo, datepi
                 unitsBySid[sid].push(datas[i].txid);
             }
 
-            aries.ui.getXivewPointListForMultiDomain(unitsBySid, times.start, times.end);
+            extension.popup("xview.multidomain", {
+                txIds: unitsBySid,
+                startTime: times.start,
+                endTime: times.end
+            });
         }
 
         return false;
@@ -142,8 +164,6 @@ function setDatePickerEvent(elem, start, end) {
 }
 
 function loadGuidDataList(guid, stime, etime) {
-    aries.ui.showLoading();
-
     $.ajax({
         url:"/plugin/guid/list",
         method: "GET",
@@ -154,12 +174,9 @@ function loadGuidDataList(guid, stime, etime) {
         },
         success: function(data) {
             ui_table.update(data);
-            $(".total-count").find("span").html(data.length.toLocaleForAries());
-
-            aries.ui.closeLoading();
+            $(".total-count").find("span").html(data.length);
         },
         error: function(e) {
-            aries.ui.closeLoading();
         }
     });
 }
@@ -190,3 +207,14 @@ function getSearchTimes() {
         end: edate.getTime()
     }
 }
+
+function printDateStr(time) {
+    const date = new Date(time);
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getMilliseconds()}`;
+}
+
+window.ui_dates = ui_dates;
+window.ui_hours = ui_hours;
+window.ui_minutues = ui_minutues;
+window.ui_table = ui_table;
+window.printDateStr = printDateStr;

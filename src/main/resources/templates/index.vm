@@ -120,16 +120,16 @@
                 <td><!= (clientIp == null || clientIp == 'null') ? '' : clientIp !></td>
                 <td><!= clientId !></td>
                 <td><!= (userId == null) ? '' : userId !></td>
-                <td align="right"><!= networkTime.toLocaleForAries() !></td>
-                <td align="right"><!= frontendTime.toLocaleForAries() !></td>
-                <td><!= getServerMoment(startTime).format("HH:mm:ss SSS") !></td>
-                <td><!= getServerMoment(endTime).format("HH:mm:ss SSS") !></td>
-                <td><!= getServerMoment(collectionTime).format("HH:mm:ss SSS") !></td>
-                <td align="right"><!= responseTime.toLocaleForAries() !></td>
-                <td align="right"><!= sqlTime.toLocaleForAries() !></td>
-                <td align="right"><!= externalcallTime.toLocaleForAries() !></td>
-                <td align="right"><!= fetchTime.toLocaleForAries() !></td>
-                <td align="right"><!= (cpuTime == -1) ? '' : cpuTime.toLocaleForAries() !></td>
+                <td align="right"><!= networkTime !></td>
+                <td align="right"><!= frontendTime !></td>
+                <td><!= printDateStr(startTime) !></td>
+                <td><!= printDateStr(endTime) !></td>
+                <td><!= printDateStr(collectionTime) !></td>
+                <td align="right"><!= responseTime !></td>
+                <td align="right"><!= sqlTime !></td>
+                <td align="right"><!= externalcallTime !></td>
+                <td align="right"><!= fetchTime !></td>
+                <td align="right"><!= (cpuTime == -1) ? '' : cpuTime !></td>
                 <td><!= errorType !></td>
                 <td><!= applicationName !></td>
             </tr>

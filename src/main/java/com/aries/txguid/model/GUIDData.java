@@ -1,4 +1,4 @@
-package com.aries.ctrl.model;
+package com.aries.txguid.model;
 
 import java.util.List;
 
