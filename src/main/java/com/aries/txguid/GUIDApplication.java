@@ -539,11 +539,6 @@ public class GUIDApplication extends WebMvcConfigurerAdapter {
             public int[] list(String s, short i) {
                 return new int[0];
             }
-
-            @Override
-            public boolean existBusinessData(short i, int i1, long l, long l1) throws DataServerException {
-                return false;
-            }
         };
     }
 

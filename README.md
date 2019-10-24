@@ -20,3 +20,4 @@ Different versions of the server support different plug-in versions.
 | 1.0.1       | Greater than or equal to version 5.3.0 |
 | 1.0.2       | Greater than or equal to version 5.3.0 |
 | 1.1.0       | Greater than or equal to version 5.4.0 |
+| 1.2.0       | Greater than or equal to version 5.5.0 |

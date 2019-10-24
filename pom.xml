@@ -5,7 +5,7 @@
 
     <groupId>com.aries</groupId>
     <artifactId>plugin-guid</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>aries-plugin-guid</name>
@@ -63,16 +63,16 @@
         <dependency>
             <groupId>com.jennifersoft.aries</groupId>
             <artifactId>aries-common</artifactId>
-            <systemPath>/Users/alvin/Documents/Test/jennifer5/server.view/lib/jennifer.common-5.4.1.2.jar</systemPath>
+            <systemPath>/Users/alvin/Documents/Test/jennifer5/server.view/lib/jennifer.common-5.5.0.jar</systemPath>
             <scope>system</scope>
-            <version>5.4.1.2</version>
+            <version>5.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.jennifersoft.aries</groupId>
             <artifactId>jennifer.server.view</artifactId>
-            <systemPath>/Users/alvin/Documents/Test/jennifer5/server.view/lib/jennifer.server.view-5.4.1.2.jar</systemPath>
+            <systemPath>/Users/alvin/Documents/Test/jennifer5/server.view/lib/jennifer.server.view-5.5.0.jar</systemPath>
             <scope>system</scope>
-            <version>5.4.1.2</version>
+            <version>5.5.0</version>
         </dependency>
     </dependencies>
 
